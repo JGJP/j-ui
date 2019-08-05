@@ -1,0 +1,359 @@
+
+@import './proprietary.sss'
+
+// breakpoints
+
+$phone-bp:  34em
+$tablet-bp: 48em
+
+$phone:       width <= $phone-bp
+$tablet:      width <= $tablet-bp
+
+$not-phone:   width > $phone-bp
+$not-tablet:  width > $tablet-bp
+
+$tablet-only: $phone-bp < width <= $tablet-bp
+
+// sizes
+
+$width-wide:         	80em
+$width-full:         	66em
+$width-medium:       	45em
+$width-narrow:       	30em
+$width-super-narrow: 	20em
+
+$border-width: 2px
+
+// colors
+$transparency: 0.75
+
+$black:             hsl(230, 10%, 5%)
+$white:             hsl(230, 10%, 99%)
+$white-transparent: hsla(230, 10%, 99%, 0.7)
+$white-rim: 		hsl(230, 10%, 80%)
+$black-dark:        hsl(230, 10%, 3%)
+$black-transparent: rgba(0, 0, 0, 0.7)
+$black-rim:         rgba(255, 255, 255, 0.1)
+$blue-light:		hsl(230, 45%, 70%)
+$blue:				hsl(230, 45%, 35%)
+$blue-dark:			hsl(230, 50%, 25%)
+$blue-dark-trans:	hsla(230, 50%, 25%, $transparency)
+$blue-darker:		hsl(230, 50%, 15%)
+$orange:			hsl(30, 75%, 50%)
+$gold:				hsl(36, 67%, 60%)
+$gold-trans:		hsla(36, 67%, 60%, 0)
+$gold-dark:			hsl(36, 67%, 50%)
+$red:				hsl(0, 60%, 60%)
+$red-dark:			hsl(0, 60%, 50%)
+$green:				hsl(146, 47%, 47%)
+$green-dark:		hsl(146, 47%, 35%)
+
+$grey:				hsl(230, 10%, 20%)
+$grey-dark:			hsl(230, 10%, 10%)
+$grey-dark-trans:	hsla(230, 10%, 10%, $transparency)
+$grey-light:		hsl(230, 10%, 75%)
+$grey-pale:			hsl(230, 10%, 85%)
+
+$body-color: $grey-dark
+$body-bg: $blue-darker
+$header-color: hsl(0, 0%, 10%)
+// $accent-color: $blue-light
+$main-bg: linear-gradient(to right, $grey-pale, $white)
+$nav-bg: $blue-dark
+$nav-bg-trans: $blue-dark-trans
+$nav-bg-rim: $blue
+$nav-bg-pale: $blue-light
+$nav-color: $white
+$highlight-color: $gold
+$footer-bg: $nav-bg
+$socket-bg: $blue-darker
+// fonts
+
+// $body-font: 'Noto Sans JP', sans-serif
+$font-serif:     游ゴシック体, 'Yu Gothic', YuGothic, 'ヒラギノ角ゴシック Pro', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif
+$font-body:      'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, Osaka, 'MS PGothic', arial, helvetica, sans-serif
+$font-minchotai: "游明朝", YuMincho, "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "HG明朝E", "ＭＳ Ｐ明朝", "ＭＳ 明朝", serif
+$font-english:   'Roboto', sans-serif
+
+$font-weight-thin:    400
+$font-weight-normal:  500
+$font-weight-bold:    700
+$font-weight-header:  $font-weight-normal
+
+// transitions
+
+$trans-time:    0.3s
+$ease-out:      cubic-bezier(0, 0, 0, 1)
+$scale-down:    0.96
+$scale-up:      1.05
+$hover-opacity: 0.6
+
+$spacing: 1rem
+$spacing-big: 1.5rem
+
+@define-mixin nav-bg
+	@mixin gradient-bg $nav-bg-rim, $nav-bg
+
+@define-mixin transition $property, $time: $trans-time, $ease: ease
+	transition: $property $time $ease
+	will-change: $property
+
+// mixins
+
+@define-mixin rounded
+	border-radius: 0.25rem
+
+@define-mixin gradient-underline $background: $grey-pale, $from: $gold
+	@mixin overlay
+	position: relative
+	&::before
+		@mixin gradient-bg $from, $gold-trans
+		@mixin transparent
+		z-index: -1
+		bottom: 0
+		top: auto
+		height: 0.5em
+
+@define-mixin gradient-bg $from: $gold, $to: $white
+	background: linear-gradient(to right,$from,$to)
+
+@define-mixin box-shadow
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)
+
+@define-mixin font-range $min: 0.8em, $max: 1em, $range: 12em 34em
+	font-size: responsive $min $max
+	font-range: $range
+
+@define-mixin minchotai
+	font-family: $font-minchotai
+
+@define-mixin hover-opacity
+	transition: opacity $trans-time ease
+	&:hover
+		opacity: $hover-opacity
+
+@define-mixin hover-scale $amount: $scale-down, $start: 1
+	transform: scale($start)
+	transition: transform $trans-time ease
+	&:hover
+		transform: scale($amount)
+
+@define-mixin background-image $src
+	background: url($src)
+	background-size: cover
+	background-position: center center
+
+@define-mixin overlay
+	&::before
+		content: ''
+		position: absolute
+		width: 100%
+		height: 100%
+		left: 0
+		top: 0
+
+@define-mixin ghost-button $color: $body-color, $hover-color: $white
+	display: inline-block
+	padding: 1em 2em
+	border: $border-width solid $color
+	color: $color
+	@mixin transition color
+	@mixin transition background
+	@mixin hover-scale
+	@mixin rounded
+	&:hover
+		color: $hover-color
+		background: $color
+
+@define-mixin button $color: $highlight-color, $text-color: $white
+	display: inline-block
+	padding: 1em 2em
+	border: $border-width solid $color
+	background: $color
+	color: $text-color
+	cursor: pointer
+	@mixin transition color
+	@mixin transition background
+	@mixin hover-scale
+	@mixin hover-opacity
+	@mixin rounded
+	&[disabled="disabled"]
+		opacity: 0.4
+
+@define-mixin position-absolute
+	position: absolute
+	height: 100%
+	width: 100%
+	top: 0
+	left: 0
+
+@define-mixin big-vert-padding
+	@mixin big-vert-padding-top
+	@mixin big-vert-padding-bottom
+
+@define-mixin big-vert-padding-top
+	padding-top: 9em
+	@media ($tablet)
+		padding-top: 6em
+	@media ($phone)
+		padding-top: 6em
+
+@define-mixin big-vert-padding-bottom
+	padding-bottom: 9em
+	@media ($tablet)
+		padding-bottom: 6em
+	@media ($phone)
+		padding-bottom: 6em
+
+@define-mixin medium-vert-padding
+	@mixin medium-vert-padding-top
+	@mixin medium-vert-padding-bottom
+
+@define-mixin medium-vert-padding-top
+	padding-top: 6em
+	@media ($tablet)
+		padding-top: 4em
+	@media ($phone)
+		padding-top: 2em
+
+@define-mixin medium-vert-padding-bottom
+	padding-bottom: 6em
+	@media ($tablet)
+		padding-bottom: 4em
+	@media ($phone)
+		padding-bottom: 2em
+
+@define-mixin small-vert-padding
+	@mixin small-vert-padding-top
+	@mixin small-vert-padding-bottom
+
+@define-mixin small-vert-padding-top
+	padding-top: 1em
+	@media ($tablet)
+		padding-top: 1em
+	@media ($phone)
+		padding-top: 1em
+
+@define-mixin small-vert-padding-bottom
+	padding-bottom: 1em
+	@media ($tablet)
+		padding-bottom: 1em
+	@media ($phone)
+		padding-bottom: 1em
+
+
+@define-mixin vert-padding
+	@mixin vert-padding-top
+	@mixin vert-padding-bottom
+
+@define-mixin vert-padding-top
+	padding-top: 3em
+	@media ($phone)
+		padding-top: 2em
+
+@define-mixin vert-padding-bottom
+	padding-bottom: 3em
+	@media ($phone)
+		padding-bottom: 2em
+
+@define-mixin horz-padding
+	@mixin horz-padding-left
+	@mixin horz-padding-right
+
+@define-mixin horz-padding-left
+	padding-left: 4em
+	@media ($phone)
+		padding-left: 2em
+
+@define-mixin horz-padding-right
+	padding-right: 4em
+	@media ($phone)
+		padding-right: 2em
+
+@define-mixin big-vert-margin
+	@mixin big-vert-margin-top
+	@mixin big-vert-margin-bottom
+
+@define-mixin big-vert-margin-top
+	margin-top: 9em
+	@media ($tablet)
+		margin-top: 6em
+	@media ($phone)
+		margin-top: 3em
+
+@define-mixin big-vert-margin-bottom
+	margin-bottom: 9em
+	@media ($tablet)
+		margin-bottom: 6em
+	@media ($phone)
+		margin-bottom: 3em
+
+@define-mixin medium-vert-margin
+	@mixin medium-vert-margin-top
+	@mixin medium-vert-margin-bottom
+
+@define-mixin medium-vert-margin-top
+	margin-top: 6em
+	@media ($tablet)
+		margin-top: 4em
+	@media ($phone)
+		margin-top: 2em
+
+@define-mixin medium-vert-margin-bottom
+	margin-bottom: 6em
+	@media ($tablet)
+		margin-bottom: 4em
+	@media ($phone)
+		margin-bottom: 2em
+
+@define-mixin small-vert-margin
+	@mixin small-vert-margin-top
+	@mixin small-vert-margin-bottom
+
+@define-mixin small-vert-margin-top
+	margin-top: 1em
+	@media ($tablet)
+		margin-top: 1em
+	@media ($phone)
+		margin-top: 1em
+
+@define-mixin small-vert-margin-bottom
+	margin-bottom: 1em
+	@media ($tablet)
+		margin-bottom: 1em
+	@media ($phone)
+		margin-bottom: 1em
+
+
+@define-mixin vert-margin
+	@mixin vert-margin-top
+	@mixin vert-margin-bottom
+
+@define-mixin vert-margin-top
+	margin-top: 3em
+	@media ($phone)
+		margin-top: 2em
+
+@define-mixin vert-margin-bottom
+	margin-bottom: 3em
+	@media ($phone)
+		margin-bottom: 2em
+
+@define-mixin horz-margin
+	@mixin horz-margin-left
+	@mixin horz-margin-right
+
+@define-mixin horz-margin-left
+	margin-left: 4em
+	@media ($phone)
+		margin-left: 2em
+
+@define-mixin horz-margin-right
+	margin-right: 4em
+	@media ($phone)
+		margin-right: 2em
+
+@define-mixin transparent
+	opacity: $transparency
+
+

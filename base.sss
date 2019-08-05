@@ -1,0 +1,296 @@
+@import "./vars.sss"
+
+.layout
+	overflow: hidden
+	position: relative
+
+
+body
+	font-family: $font-body
+	background: $body-bg
+	color: $body-color
+	@mixin font-range
+
+	main
+		background: $main-bg
+		min-height: 20em
+		overflow: hidden
+		
+	section,
+	.section
+		position: relative
+
+		&:first-child
+			@mixin medium-vert-padding-top
+		@mixin vert-padding-top
+		@mixin vert-padding-bottom
+
+		&.small-padding
+			@mixin small-vert-padding-top
+			@mixin small-vert-padding-bottom
+		&.medium-padding
+			@mixin medium-vert-padding-top
+			@mixin medium-vert-padding-bottom
+		&.big-padding
+			@mixin big-vert-padding-top
+			@mixin big-vert-padding-bottom
+		&.no-padding
+			padding: 0
+			@media ($tablet)
+				padding: 0
+			@media ($phone)
+				padding: 0
+
+	.container
+		position: relative
+		width: $width-full
+		max-width: 100%
+		padding: 0 1em
+		margin: 0 auto
+
+		&.super-narrow
+			width: $width-super-narrow
+		&.narrow
+			width: $width-narrow
+		&.medium
+			width: $width-medium
+		&.wide
+			width: $width-wide
+		&.full
+			width: 100%
+			margin: 0
+			padding: 0
+		&.no-padding
+			padding: 0
+			@media ($tablet)
+				padding: 0
+			@media ($phone)
+				padding: 0
+		&.left
+			margin-left: 0
+		&.right
+			margin-right: 0
+			text-align: right
+
+	.space-items > *:not(:last-child)
+		margin-bottom: $spacing
+
+	.reader
+		@util hide-visually
+
+	br:not(.mobile)
+		@media ($phone)
+			display: none
+
+	.shadow
+		@mixin box-shadow
+		@mixin rounded
+	.pad
+		padding: $spacing
+
+// grids
+	
+.grid
+	display: flex
+	justify-content: stretch
+	align-items: center
+	&.start
+		align-items: flex-start
+	.half
+		width: 50%
+	.two-thirds
+		width: 66.66%
+	.third
+		width: 33.33%
+	.quarter
+		width: 25%
+	.grow
+		flex-grow: 1
+	@media ($not-phone)
+		&.spacing
+			> *
+				padding-left: 1em
+				padding-right: 1em
+			> *:first-child
+				padding-left: 0
+			> *:last-child
+				padding-right: 0
+		> *
+			padding-left: 0.5em
+			padding-right: 0.5em
+		> *:first-child
+			padding-left: 0
+		> *:last-child
+			padding-right: 0
+		&.reverse
+			flex-direction: row-reverse
+			> *
+				padding-left: 0.5em
+				padding-right: 0.5em
+			> *:first-child
+				padding-right: 0
+			> *:last-child
+				padding-left: 0
+
+	@media ($phone)
+		&:not(.mobile)
+			display: block
+			.half,
+			.two-thirds,
+			.third,
+			.quarter
+				width: 100%
+			> *:not(:last-child)
+				margin-bottom: $spacing-big
+
+.center
+	display: flex
+	flex-direction: column
+	justify-content: space-around
+	align-items: center
+
+// z-indexes
+
+body
+	.container
+		z-index: 10
+	section
+		z-index: 10
+	header
+		z-index: 20
+
+// type
+
+body
+
+	h1, h2, h3, h4, h5, h6, p:not(.br)
+		white-space: pre-line
+		margin-top: 0
+		margin-bottom: 0
+		&.center
+			text-align: center
+		&.fade
+			@mixin transparent
+
+		&.highlight
+			color: $white
+			background: $grey-dark-trans
+			padding: 0.2em
+
+	img.highlight
+		background: $white
+		@mixin vert-margin-top
+		@mixin vert-margin-bottom
+
+	.english
+		font-family: $font-english
+	p
+		line-height: 1.5em
+		margin: 1em 0
+		letter-spacing: 0.05em
+		word-wrap: break-word
+
+	h1, h2, h3
+		font-weight: $font-weight-header
+		line-height: 1.2em
+
+	h1
+		@mixin font-range 1.75em 2.5em
+		// font-size: 2.5em
+	h2
+		font-size: 2em
+	h3
+		font-size: 1.5em
+		font-weight: $font-weight-bold
+	h4
+		text-decoration: underline
+		font-weight: $font-weight-bold
+	.button
+		@mixin button
+		background: linear-gradient(135deg, $gold, $gold-dark)
+	.ghost-button
+		@mixin ghost-button $white, $nav-bg
+	.ghost-button-tight
+		@mixin ghost-button $white, $nav-bg
+		padding: 0.2em 0.4em
+	a
+		@mixin hover-opacity
+		@mixin hover-scale
+	.sub
+		font-size: 0.6em
+	.bold
+		font-weight: $font-weight-bold
+	span
+		&.error,
+		&.success
+			padding: 0.25em 1em
+			display: inline-block
+			@mixin rounded
+			color: $white
+		&.error
+			@mixin gradient-bg $red, $red-dark
+		&.success
+			@mixin gradient-bg $green, $green-dark
+
+// resets and compatibility
+
+body
+
+	overflow-y: scroll
+	margin: 0
+	min-height: 100vh
+	*
+		box-sizing: border-box
+	main
+		display: block
+		max-width: 100%
+		max-height: 100%
+	img
+		display: block
+		max-width: 100%
+		max-height: 100%
+		height: auto
+		width: auto
+		-ms-interpolation-mode: bicubic
+	a
+		text-decoration: none
+		color: inherit
+	ul,
+	ol
+		margin: 0
+		padding: 0
+		list-style: none
+
+	// put in main so it doesn't affect nav
+	main
+		ul,
+		ol
+			margin-left: 2em
+			> *:not(:last-child)
+				margin-bottom: $spacing
+		ul
+			list-style-type: disc
+		ol
+			list-style-type: decimal
+			font-weight: $font-weight-bold
+			> li
+				> *:not(h4, strong)
+					font-weight: $font-weight-normal
+
+	table
+		border-collapse: collapse
+
+// table
+
+table
+	&.full
+		width: 100%
+	tr
+		th,
+		td
+			padding: 0.2em $spacing
+		th
+			background: $nav-bg
+			color: $nav-color
+			&:not(:last-child)
+				border-right: $border-width solid $nav-color
