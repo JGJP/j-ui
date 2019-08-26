@@ -1,6 +1,4 @@
 
-@import './proprietary.sss'
-
 // breakpoints
 
 $phone-bp:  34em
@@ -27,46 +25,59 @@ $border-width: 2px
 // colors
 $transparency: 0.75
 
-$black:             hsl(230, 10%, 5%)
-$white:             hsl(230, 10%, 99%)
-$white-transparent: hsla(230, 10%, 99%, 0.7)
-$white-rim: 		hsl(230, 10%, 80%)
-$black-dark:        hsl(230, 10%, 3%)
-$black-transparent: rgba(0, 0, 0, 0.7)
-$black-rim:         rgba(255, 255, 255, 0.1)
-$blue-light:		hsl(230, 45%, 70%)
-$blue:				hsl(230, 45%, 35%)
-$blue-dark:			hsl(230, 50%, 25%)
-$blue-dark-trans:	hsla(230, 50%, 25%, $transparency)
-$blue-darker:		hsl(230, 50%, 15%)
+$hue: 59
+
+$white:             hsl($hue, 10%, 99%)
+$white-transparent: hsla($hue, 10%, 99%, 0.7)
+$white-rim: 		hsl($hue, 10%, 80%)
+
+$black:             hsl($hue, 10%, 5%)
+$black-dark:        hsl($hue, 10%, 3%)
+$black-transparent: rgba($hue, 0, 0, 0.7)
+$black-rim:         rgba($hue, 255, 255, 0.1)
+
+$yellow:            hsl($hue, 100%, 50%)
+$yellow-trans:      hsla($hue, 100%, 50%, 0)
+
+$blue-light:		hsl($hue, 45%, 70%)
+$blue:				hsl($hue, 45%, 35%)
+$blue-dark:			hsl($hue, 50%, 25%)
+$blue-dark-trans:	hsla($hue, 50%, 25%, $transparency)
+$blue-darker:		hsl($hue, 50%, 15%)
+
 $orange:			hsl(30, 75%, 50%)
+
 $gold:				hsl(36, 67%, 60%)
 $gold-trans:		hsla(36, 67%, 60%, 0)
 $gold-dark:			hsl(36, 67%, 50%)
+
 $red:				hsl(0, 60%, 60%)
 $red-dark:			hsl(0, 60%, 50%)
+
 $green:				hsl(146, 47%, 47%)
 $green-dark:		hsl(146, 47%, 35%)
 
-$grey:				hsl(230, 10%, 20%)
-$grey-dark:			hsl(230, 10%, 10%)
-$grey-dark-trans:	hsla(230, 10%, 10%, $transparency)
-$grey-light:		hsl(230, 10%, 75%)
-$grey-pale:			hsl(230, 10%, 85%)
+$grey:				hsl($hue, 10%, 20%)
+$grey-dark:			hsl($hue, 10%, 10%)
+$grey-dark-trans:	hsla($hue, 10%, 10%, $transparency)
+$grey-light:		hsl($hue, 10%, 75%)
+$grey-light-trans:	hsla($hue, 10%, 75%, $transparency)
+$grey-pale:			hsl($hue, 10%, 85%)
+$grey-pale-trans:	hsla($hue, 10%, 85%, $transparency)
 
 $body-color: $grey-dark
 $body-bg: $blue-darker
 $header-color: hsl(0, 0%, 10%)
 // $accent-color: $blue-light
 $main-bg: linear-gradient(to right, $grey-pale, $white)
-$nav-bg: $blue-dark
+$nav-bg: $grey-light-trans
 $nav-bg-trans: $blue-dark-trans
-$nav-bg-rim: $blue
-$nav-bg-pale: $blue-light
-$nav-color: $white
+$nav-bg-rim: $grey-pale-trans
+$nav-bg-pale: $grey-pale-trans
+$nav-color: $black
 $highlight-color: $gold
 $footer-bg: $nav-bg
-$socket-bg: $blue-darker
+$socket-bg: $grey-light
 // fonts
 
 // $body-font: 'Noto Sans JP', sans-serif
@@ -103,11 +114,12 @@ $spacing-big: 1.5rem
 @define-mixin rounded
 	border-radius: 0.25rem
 
-@define-mixin gradient-underline $background: $grey-pale, $from: $gold
+@define-mixin gradient-underline $background: $grey-pale, $from: $yellow
 	@mixin overlay
 	position: relative
 	&::before
-		@mixin gradient-bg $from, $gold-trans
+		// @mixin gradient-bg $from, $yellow-trans
+		background: $from
 		@mixin transparent
 		z-index: -1
 		bottom: 0
